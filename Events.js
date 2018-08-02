@@ -12,9 +12,13 @@ class Component extends React.Component {
 			events:[],
 			filter:'',
 			newName:'',
+			newNameValid: false,
 			newPlace:'',
+			newPlaceValid: false,
 			newDate:'',
+			newDateValid: false,
 			newTime:'',
+			newTimeValid: false,
 		}
 	}
 	
@@ -51,7 +55,8 @@ class Component extends React.Component {
 		const value= event.currentTarget.value;
 		
 		this.setState({
-			[field]: value
+			[field]: value,
+			[field+'Valid']:value.length>0
 		})
 		
 	}
@@ -63,7 +68,11 @@ class Component extends React.Component {
 			newName,
 			newPlace,
 			newDate,
-			newTime
+			newTime,
+			newNameValid,
+			newPlaceValid,
+			newDateValid,
+			newTimeValid
 		} = this.state;
 		
 		const maxId = Math.max(...events.map(item=>item.id));
@@ -74,10 +83,12 @@ class Component extends React.Component {
 			date: newDate,
 			time: newTime
 		});
+		
+		if (newNameValid && newPlaceValid && newDateValid && newTimeValid){
 		this.setState({
 			events
 			
-		});
+		})}
 		
 	}
 	
@@ -97,7 +108,12 @@ return(
   </ul><button onClick={this.onButtonClicked}>WYCZYŚĆ</button>
   <SubmitForm onFormSubmit={this.onFormSubmit.bind(this)} name={this.state.newName} place={this.state.newPlace} 
   date={this.state.newDate} time={this.state.newTime} 
-  onFieldChange={this.onFieldChange.bind(this)} />
+  onFieldChange={this.onFieldChange.bind(this)}
+nameValid={this.state.newNameValid}
+placeValid={this.state.newPlaceValid}
+dateValid={this.state.newDateValid}
+timeValid={this.state.newTimeValid}
+  />
   
   </div>
 );
